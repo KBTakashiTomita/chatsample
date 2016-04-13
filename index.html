@@ -33,31 +33,30 @@
 
 <div id="message"></div>
 <script>
-$(function(){
+var divMessage = document.getElementById("message");
 var host = "ws://kbnodejssample01.azurewebsites.net/";
 var socket = new WebSocket(host);
 console.log(socket.readyState);
 
 socket.onopen = function(){
-console.log(socket.readyState);
+	console.log(socket.readyState);
 }
 socket.onmessage = function(message){
-console.log(socket.readyState + " " + message.data);
-$("#message")[0].val(message.data + "\n" + $("#message")[0].val());
+	console.log(socket.readyState + " " + message.data);
+	divMessage.html = message.data + "\n" + divMessage.html;
 }
 socket.onclose = function(){
-console.log(socket.readyState);
+	console.log(socket.readyState);
 }
-$(window).unload(function() {
-socket.onclose();
-console.log(socket.readyState);
-})
+window.onunload = function() {
+	socket.onclose();
+	console.log(socket.readyState);
+}
 
-$("#btn-submit").on("click",function(){
-message = $("#txt-message").val()
-socket.send(message);
-});
-})
+document.getElementById("btn-submit").onclick = function(){
+	var message = document.getElementById("txt-message").value;
+	socket.send(message);
+}
 </script>
 </body>
 </html>
