@@ -1,0 +1,63 @@
+<html>
+<head>
+<style>
+#txt-message {
+	margin: 10px;
+	padding: 10px;
+	border: 1px #ccc solid;
+	font-size: 15px;
+}
+
+#btn-submit {
+	padding: 3px 20px;
+	border: 1px #ccc solid;
+	font-size: 15px;
+}
+
+#message {
+	margin: 10px;
+	padding: 10px;
+	height: 200px;
+	border: 1px #ccc solid;
+	overflow-y: scroll;
+}
+
+.single {
+	border-bottom: 1px solid #ddd;
+}
+</style>
+</head>
+<body>
+<input type="text" id="txt-message" />
+<input type="submit" id="btn-submit" value="送信" />
+
+<div id="message"></div>
+<script>
+$(function(){
+var host = "ws://kbnodejssample01.azurewebsites.net/";
+var socket = new WebSocket(host);
+console.log(socket.readyState);
+
+socket.onopen = function(){
+console.log(socket.readyState);
+}
+socket.onmessage = function(message){
+console.log(socket.readyState + " " + message.data);
+$("#message")[0].val(message.data + "\n" + $("#message")[0].val());
+}
+socket.onclose = function(){
+console.log(socket.readyState);
+}
+$(window).unload(function() {
+socket.onclose();
+console.log(socket.readyState);
+})
+
+$("#btn-submit").on("click",function(){
+message = $("#txt-message").val()
+socket.send(message);
+});
+})
+</script>
+</body>
+</html>
