@@ -23,6 +23,7 @@ io.sockets.on( "connection", function ( socket ) {
 });
 
 */
+var port = process.env.PORT || 1337;
 var WebSocketServer = require('ws').Server
     , http = require('http')
     , express = require('express')
@@ -59,4 +60,4 @@ function broadcast(message) {
     });
 };
  
-server.listen(3000);
+server.listen(port);
