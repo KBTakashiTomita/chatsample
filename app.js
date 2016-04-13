@@ -28,14 +28,14 @@ var WebSocketServer = require('ws').Server
     , http = require('http')
     , express = require('express')
     , app = express();
- 
+
 app.use(express.static(__dirname + '/'));
 var server = http.createServer(app);
 var wss = new WebSocketServer({server:server});
- 
+
 //Websocket接続を保存しておく
 var connections = [];
- 
+
 //接続時
 wss.on('connection', function (ws) {
     //配列にWebSocket接続を保存
@@ -61,7 +61,6 @@ function broadcast(message) {
 };
  
 server.listen(port);
-*/
 /*
 var http = require('http');
 var port = process.env.port || 1337;
